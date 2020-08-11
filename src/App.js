@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Switch, Route } from "react-router-dom";
+import Navbar from "./components/navbar";
+import Notes from "./components/notes";
+import Form from "./components/form";
+
+import Background from "./images/weather.png";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      className="min-h-screen font-body"
+      style={{
+        backgroundImage: `url(${Background})`,
+        backgroundRepeat: "repeat",
+      }}
+    >
+      <div>
+        <Navbar />
+        <Switch>
+          <Route path="/" component={Notes} exact />
+          <Route path="/add" component={Form} />
+          <Route path="/update/:id" component={Form} />
+        </Switch>
+      </div>
     </div>
   );
 }
