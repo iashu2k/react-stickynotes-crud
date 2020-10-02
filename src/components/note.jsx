@@ -18,24 +18,29 @@ const Note = ({ data }) => {
 
   return (
     <>
-      <div className="bg-white rounded-lg shadow-lg text-justify p-4">
-        <h1 className="font-semibold text-sm text-center">{data.heading}</h1>
-
+      <div className="bg-white rounded-lg shadow-lg text-justify p-4 flex flex-col justify-between">
         <div>
-          <p className="font-light text-xs mt-2">{data.task}</p>
-          <div className="w-full border-t-2 my-1 border-gray-400" />
-        </div>
-
-        <div className="text-right text-gray-600 flex flex-row-reverse mt-auto">
-          <div
-            className="mx-1 cursor-pointer hover:text-gray-400"
-            onClick={() => setShowModal(true)}
-          >
-            <FaTrash />
+          <div className="font-semibold text-sm text-center">
+            {data.heading}
           </div>
-          <Link to={"./update/" + data._id}>
-            <FaPencilAlt className="mx-1 cursor-pointer hover:text-gray-400" />
-          </Link>
+
+          <div>
+            <p className="font-light text-xs mt-2">{data.task}</p>
+          </div>
+        </div>
+        <div>
+          <div className="w-full border-t-2 my-1 border-gray-400" />
+          <div className="text-right text-gray-600 flex flex-row-reverse mt-auto">
+            <div
+              className="mx-1 cursor-pointer hover:text-gray-400"
+              onClick={() => setShowModal(true)}
+            >
+              <FaTrash />
+            </div>
+            <Link to={"./update/" + data._id}>
+              <FaPencilAlt className="mx-1 cursor-pointer hover:text-gray-400" />
+            </Link>
+          </div>
         </div>
       </div>
       {showModal ? (

@@ -6,6 +6,7 @@ import Notes from "./components/notes";
 import Form from "./components/form";
 
 import Background from "./images/weather.png";
+import Landing from "./components/landing";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
       <div>
         <Navbar />
         <Switch>
-          <Route path="/" component={Notes} exact />
+          <Route path="/" component={Landing} exact />
+          <Route path="/notes" component={Notes} />
           <Route path="/add" component={Form} />
           <Route path="/update/:id" component={Form} />
         </Switch>

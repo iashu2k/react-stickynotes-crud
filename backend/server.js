@@ -27,5 +27,6 @@ connection.once("open", () => {
 const todosRouter = require("./routes/todos");
 
 app.use('/todos', todosRouter);
+app.use((req, res)=> res.status(404).json('Not-found'));
 
 
