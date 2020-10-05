@@ -30,7 +30,7 @@ export default function Form(props) {
       .post(url, data)
       .then((res) => {
         console.log(res);
-        history.push("/");
+        history.push("/notes");
       })
       .catch((err) => console.log(err));
   };

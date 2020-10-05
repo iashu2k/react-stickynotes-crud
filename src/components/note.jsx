@@ -11,7 +11,7 @@ const Note = ({ data }) => {
       .then((res) => {
         console.log(res);
         history.push("/add");
-        history.replace("/");
+        history.replace("/notes");
       })
       .catch((err) => console.log(err));
   };
