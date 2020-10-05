@@ -2,32 +2,56 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Form(props) {
   const id = props.match.params.id;
   const history = useHistory();
   const [form, setForm] = useState({});
+  const { getAccessTokenSilently } = useAuth0();
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
-    if (id) {
-      axios
-        .get("http://localhost:5000/todos/" + id, { signal })
-        .then((res) => setForm(res.data))
-        .catch((err) => console.log(err));
-    }
+
+    const secureApiCall = async () => {
+      try {
+        const token = await getAccessTokenSilently();
+
+        if (id) {
+          axios
+            .get("http://localhost:5000/todos/" + id, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              signal,
+            })
+            .then((res) => setForm(res.data))
+            .catch((err) => console.log(err));
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    secureApiCall();
+
     return () => {
       abortController.abort();
     };
-  }, [id]);
+  }, [id, getAccessTokenSilently]);
 
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const url = id
       ? "http://localhost:5000/todos/update/" + id
       : "http://localhost:5000/todos/add";
+    const token = await getAccessTokenSilently();
     axios
-      .post(url, data)
+      .post(url, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         console.log(res);
         history.push("/notes");
