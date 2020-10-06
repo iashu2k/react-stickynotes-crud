@@ -6,6 +6,7 @@
 .pnp.js
 /tailwind-default.js
 /src/assets/main.css
+/.env
 
 # testing
 /coverage

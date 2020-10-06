@@ -2,16 +2,23 @@ import React from "react";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Note = ({ data }) => {
   const [showModal, setShowModal] = React.useState(false);
   const history = useHistory();
-  const handleDelete = (id) => {
-    Axios.delete("http://localhost:5000/todos/" + id)
+  const { getAccessTokenSilently } = useAuth0();
+  const handleDelete = async (id) => {
+    const token = await getAccessTokenSilently();
+    Axios.delete("http://localhost:5000/todos/" + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => {
         console.log(res);
         history.push("/add");
-        history.replace("/");
+        history.replace("/notes");
       })
       .catch((err) => console.log(err));
   };

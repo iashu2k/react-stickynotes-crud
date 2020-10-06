@@ -3,11 +3,14 @@ import ReactDOM from "react-dom";
 import "./assets/main.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import Auth0ProviderWithHistory from "./auth0-provider-with-history";
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <Auth0ProviderWithHistory>
+      <App />
+    </Auth0ProviderWithHistory>
   </BrowserRouter>,
   document.getElementById("root")
 );
