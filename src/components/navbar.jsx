@@ -10,7 +10,7 @@ import SignupButton from "./signup-button";
 const Navbar = () => {
   const { isAuthenticated } = useAuth0();
   return (
-    <nav className="flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-blue-500 mb-3">
+    <nav className="flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-blue-400 mb-3">
       <div className="container px-4 mx-auto flex items-center justify-between">
         <div className="flex justify-between w-auto px-4">
           <Link

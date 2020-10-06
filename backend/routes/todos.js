@@ -1,18 +1,40 @@
 const router = require("express").Router();
 
+const { default: Axios } = require("axios");
 let Task = require("../models/todos.model");
 
-router.route("/").get((req, res) => {
-  Task.find()
+const getUserId = async (auth) => {
+  try {
+    const response = await Axios.get(
+      "https://dev-287e8vnj.us.auth0.com/userinfo",
+      {
+        headers: {
+          Authorization: auth,
+        },
+      }
+    );
+    return response.data.sub;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+router.route("/").get( async(req, res) => {
+  const auth = req.headers.authorization;
+  const id =  await getUserId(auth);  
+  Task.find({user_id: id})
     .then((tasks) => res.json(tasks))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/add").post((req, res) => {
+router.route("/add").post(async(req, res) => {
+  const auth = req.headers.authorization;
+  const id =  await getUserId(auth);
+
   const heading = req.body.heading;
   const task = req.body.task;
-
-  const newTask = new Task({ heading, task });
+  const user_id = id;
+  const newTask = new Task({ heading, task, user_id });
 
   newTask
     .save()

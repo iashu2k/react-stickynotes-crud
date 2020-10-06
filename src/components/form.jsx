@@ -9,6 +9,8 @@ export default function Form(props) {
   const history = useHistory();
   const [form, setForm] = useState({});
   const { getAccessTokenSilently } = useAuth0();
+  const [existsHeading, setExist] = useState(false);
+
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -56,7 +58,10 @@ export default function Form(props) {
         console.log(res);
         history.push("/notes");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err.message);
+        setExist(true);
+      });
   };
 
   return (
@@ -76,6 +81,11 @@ export default function Form(props) {
             {errors.heading && (
               <span className="text-xs text-red-500 block">
                 This field is required
+              </span>
+            )}
+            {existsHeading && (
+              <span className="text-xs text-red-500 block">
+                Task heading already exists
               </span>
             )}
           </div>
